@@ -1,1 +1,26 @@
+from igraph import *
+from numpy import *
+from matplotlib import *
+from json import loads
+with open("CIAC.json") as of:
+        data=loads(of.readline())
+comentarios=[]
+like=[]
+usuarios=[]
+
+for i in data:
+    for k,o in i.items():
+            if k=="likes":
+                temp=o["data"]
+                for j in temp:
+                    temp3=j["id"]
+                    usuarios.append(temp3)
+                    like.append(temp3)
+            elif k == "comments":
+                temp2=o["data"]
+                for g in temp2:
+                    temp4=g["id"]
+                    usuarios.append(temp4)
+                    comentarios.append(temp4)
+set(usuarios)
 
