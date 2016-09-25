@@ -6,7 +6,8 @@ with open("CIAC.json") as of:
         data=loads(of.readline())
 comentarios=[]
 like=[]
-usuarios=[]
+usuariosL=[]
+usuariosC=[]
 
 for i in data:
     for k,o in i.items():
@@ -14,13 +15,18 @@ for i in data:
                 temp=o["data"]
                 for j in temp:
                     temp3=j["id"]
-                    usuarios.append(temp3)
+                    usuariosL.append(temp3)
                     like.append(temp3)
             elif k == "comments":
                 temp2=o["data"]
                 for g in temp2:
-                    temp4=g["id"]
-                    usuarios.append(temp4)
-                    comentarios.append(temp4)
-set(usuarios)
+                    temp4=g["from"]
+                    temp5 = temp4.items()
+                    for x in temp5:
+                    	if x[0] == "id":
+                    		usuariosC.append(x[1])
+                    	else:
+                    		continue                  
+set(usuariosL)
+set(usuariosC)
 
