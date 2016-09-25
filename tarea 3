@@ -2,31 +2,54 @@ from igraph import *
 from numpy import *
 from matplotlib import *
 from json import loads
+
 with open("CIAC.json") as of:
         data=loads(of.readline())
-comentarios=[]
-like=[]
-usuariosL=[]
-usuariosC=[]
 
-for i in data:
-    for k,o in i.items():
-            if k=="likes":
-                temp=o["data"]
-                for j in temp:
-                    temp3=j["id"]
-                    usuariosL.append(temp3)
-                    like.append(temp3)
-            elif k == "comments":
-                temp2=o["data"]
-                for g in temp2:
-                    temp4=g["from"]
-                    temp5 = temp4.items()
-                    for x in temp5:
-                    	if x[0] == "id":
-                    		usuariosC.append(x[1])
-                    	else:
-                    		continue                  
-set(usuariosL)
-set(usuariosC)
+def likes_comments(data):
 
+	usuariosLdict = dict()
+	usuariosCdict = dict()
+
+
+	for i in data:
+	    for k,o in i.items():
+	            if k=="likes":
+	                temp=o["data"]
+	                for j in temp:
+	                    temp3=j["id"]
+	                    usuariosL.append(temp3)
+	                    if temp3 in usuariosLdict.keys():
+	                    	usuariosLdict[temp3]+=1
+	                    else:
+	                    	usuariosLdict[temp3]=1
+	            elif k == "comments":
+	                temp2=o["data"]
+	                for g in temp2:
+	                    temp4=g["from"]
+	                    temp5 = temp4.items()
+	                    for x in temp5:
+	                    	if x[0] == "id":
+	                    		usuariosC.append(x[1])
+	                    	else:
+	                    		continue
+	                    	if x[1] in usuariosCdict.keys():
+	                    		usuariosCdict[x[1]]+=1
+	                    	else:
+	                    		usuariosCdict[x[1]]=1
+
+
+def creargrapho(ulikes1, name1, ulikes2, name2):
+	g = Graph()
+	g.add_vertex(name1)
+	g.add_vertex(name2)
+	for u in ulikes.items():
+		g.add_vertex(u[0])
+		for v in range(0,ulikes1[u[0]]):
+			g.add_edge(u[0],name)
+	for us in ulikes2.items():
+		for v1 in range(0, us[1]):
+			if us[0] in ulikes1.keys():
+				g.add_vertex(us[0], name2)
+		g.add_edge(us[0], name2)
+		
