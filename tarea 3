@@ -6,7 +6,7 @@ from json import loads
 def activos(data, month):
 
 	usuariosAdict = dict()
-	
+
 	for i in data:
 		for x,y in i.items():
 			if x=="created_time":
@@ -50,8 +50,7 @@ def likes(data, month):
 					            else:
 					               	usuariosLdict[temp3]=1
 				else:
-					break
-	print len(usuariosLdict.items())				             
+					break				             
 	return usuariosLdict
 
 def comments(data, month):
