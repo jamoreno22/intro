@@ -12,7 +12,7 @@ def likes(data):
 		for x,y in i.items():
 			if x=="created_time":
 				anio, mes, dia = y.strip().split('-')
-				if anio != '2015' and int(mes) < 9:
+				if anio != '2015' and int(mes) == 9:
 					for k,o in i.items():
 					    if k=="likes":
 					        temp=o["data"]
@@ -22,6 +22,8 @@ def likes(data):
 					               	usuariosLdict[temp3]+=1
 					            else:
 					               	usuariosLdict[temp3]=1
+				else:
+					break
 	print len(usuariosLdict.items())				             
 	return usuariosLdict
 
@@ -33,7 +35,7 @@ def comments(data):
 		for x,y in i.items():
 			if x=="created_time":
 				anio, mes, dia = y.strip().split('-')
-				if anio != '2015' and int(mes) < 9:
+				if anio != '2015' and int(mes) == 9:
 					for k,o in i.items():
 						if k=="comments":
 							temp2 = o["data"]
@@ -45,6 +47,8 @@ def comments(data):
 										usuariosCdict[x[1]]+=1
 								else:
 									usuariosCdict[x[1]]=1
+				else:
+					break
 	return usuariosCdict
 
 
