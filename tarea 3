@@ -23,8 +23,7 @@ def likes(data):
 					            else:
 					               	usuariosLdict[temp3]=1
 				else:
-					break
-	print len(usuariosLdict.items())				             
+					break				             
 	return usuariosLdict
 
 def comments(data):
