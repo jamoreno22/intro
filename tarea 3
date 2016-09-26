@@ -3,16 +3,43 @@ from numpy import *
 from matplotlib import *
 from json import loads
 
+def activos(data):
 
-def likes(data):
-
-	usuariosLdict = dict()
-
+	usuariosAdict = dict()
+	month = raw_input("Ingrese numero de mes: ")
 	for i in data:
 		for x,y in i.items():
 			if x=="created_time":
 				anio, mes, dia = y.strip().split('-')
-				if anio != '2015' and int(mes) == 9:
+				if anio == '2016' and int(mes) == int(month)-3:
+					for k,o in i.items():
+					    if k=="likes":
+					        temp=o["data"]
+					        for j in temp:
+					            temp3=j["id"]
+					            if temp3 in usuariosAdict.keys():
+					               	usuariosAdict[temp3]+=1
+					            else:
+					               	usuariosAdict[temp3]=1
+				else:
+					break
+	for e,r in usuariosAdict.items():	
+		if r <= 3:	
+			del usuariosAdict[e]
+
+	return usuariosAdict
+
+
+
+def likes(data):
+
+	usuariosLdict = dict()
+	month = raw_input("Ingrese numero de mes: ")
+	for i in data:
+		for x,y in i.items():
+			if x=="created_time":
+				anio, mes, dia = y.strip().split('-')
+				if anio == '2016' and int(mes) == month:
 					for k,o in i.items():
 					    if k=="likes":
 					        temp=o["data"]
@@ -29,12 +56,12 @@ def likes(data):
 def comments(data):
 
 	usuariosCdict = dict()
-
+	month = raw_input("Ingrese numero de mes: ")
 	for i in data:
 		for x,y in i.items():
 			if x=="created_time":
 				anio, mes, dia = y.strip().split('-')
-				if anio != '2015' and int(mes) == 9:
+				if anio != '2015' and int(mes) == month:
 					for k,o in i.items():
 						if k=="comments":
 							temp2 = o["data"]
@@ -62,6 +89,7 @@ def creargrapho(u1, name1, u2, name2, opcion):
 	for us in u2.items():
 		if us[0] not in u1.keys():
 			g.add_vertex(us[0])
+			g.add_edge(us[0], name2)
 		else:
 			for v1 in range(0, us[1]):
 				g.add_edge(us[0], name2)
@@ -69,6 +97,8 @@ def creargrapho(u1, name1, u2, name2, opcion):
 		g.save("likes.gml", format = "gml")
 	elif opcion==2:
 		g.save("comments.gml", format = "gml")
+	else:
+		g.save("uactivos.gml", format = "gml")
 
 p1 = raw_input("Inngrese pagina 1: ")
 p2 = raw_input("ingrese pagina 2: ")
@@ -76,6 +106,7 @@ p2 = raw_input("ingrese pagina 2: ")
 print "Que desea comparar?"
 print "1)likes"
 print "2)comments"
+print "3)usuarios activos"
 
 n = raw_input("Ingrese opcion: ")
 
@@ -94,3 +125,8 @@ if n=='2':
 	pag1 = comments(data)
 	pag2 = comments(data1)
 	grapho = creargrapho(pag1, p1, pag2, p2, 2)
+
+if n=='3':
+	pag1 = activos(data)
+	pag2 = activos(data1)
+	grapho = creargrapho(pag1, p1, pag2, p2, 3)
