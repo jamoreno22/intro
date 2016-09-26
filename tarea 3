@@ -3,26 +3,21 @@ from numpy import *
 from matplotlib import *
 from json import loads
 
-with open("CIAC.json") as of:
-        data=loads(of.readline())
-
-with open("DMAT.json") as of:
-        data1=loads(of.readline())
 
 def likes(data):
 
 	usuariosLdict = dict()
 
 	for i in data:
-	    for k,o in i.items():
-	            if k=="likes":
-	                temp=o["data"]
-	                for j in temp:
-	                    temp3=j["id"]
-	                    if temp3 in usuariosLdict.keys():
-	                    	usuariosLdict[temp3]+=1
-	                    else:
-	                    	usuariosLdict[temp3]=1
+		for k,o in i.items():
+		    if k=="likes":
+		        temp=o["data"]
+		        for j in temp:
+		            temp3=j["id"]
+		            if temp3 in usuariosLdict.keys():
+		               	usuariosLdict[temp3]+=1
+		            else:
+		               	usuariosLdict[temp3]=1
 	return usuariosLdict
 
 def comments(data):
@@ -59,8 +54,29 @@ def creargrapho(u1, name1, u2, name2):
 			for v1 in range(0, us[1]):
 				g.add_edge(us[0], name2)
 	g.save("likes.gml", format = "gml")
-		
 
-pag1 = likes(data)
-pag2 = likes(data1)
-grapho = creargrapho(pag1, "CIAC", pag2, "DMAT")
+
+p1 = raw_input("Inngrese pagina 1: ")
+p2 = raw_input("ingrese pagina 2: ")
+
+print "Que desea comparar?"
+print "1)likes"
+print "2)comments"
+
+n = raw_input("Ingrese opcion: ")
+
+with open(p1+".json") as of:
+        data=loads(of.readline())
+
+with open(p2+".json") as of:
+        data1=loads(of.readline())
+
+if n=='1':
+	pag1 = likes(data)
+	pag2 = likes(data1)
+	grapho = creargrapho(pag1, p1, pag2, p2, 1)
+
+if n=='2':
+	pag1 = comments(data)
+	pag2 = comments(data1)
+	grapho = creargrapho(pag1, p1, pag2, p2, 2)
