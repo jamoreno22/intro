@@ -99,16 +99,47 @@ def creargrapho(u1, name1, u2, name2, opcion):
 	else:
 		g.save("uactivos.gml", format = "gml")
 
-p1 = raw_input("Inngrese pagina 1: ")
+print "Seleccione dos paginas"
+print "........................"
+print "1.- UTFSM"
+print "2.- PUCV"
+print "3.- UVALPO"
+print "4.- UVM"
+print "5.- UPLA"
+
+p1 = raw_input("Ingrese pagina 1: ")
 p2 = raw_input("ingrese pagina 2: ")
 
 print "Que desea comparar?"
-print "1)likes"
-print "2)comments"
-print "3)usuarios activos"
+print "........................"
+print "1.- Likes"
+print "2.- Comments"
+print "3.- Usuarios activos"
 
 n = raw_input("Ingrese opcion: ")
 month = raw_input("Ingrese numero de mes: ")
+
+if p1=="1":
+    p1="UTFSM"
+elif p1=="2":
+    p1="PUCV"
+elif p1=="3":
+    p1="UVALPO"
+elif p1=="4":
+    p1="UVM"
+elif p1=="5":
+    p1="UPLA"
+    
+if p2=="1":
+    p2="UTFSM"
+elif p2=="2":
+    p2="PUCV"
+elif p2=="3":
+    p2="UVALPO"
+elif p2=="4":
+    p2="UVM"
+elif p2=="5":
+    p2="UPLA"
 
 with open(p1+".json") as of:
         data=loads(of.readline())
@@ -129,4 +160,4 @@ if n=='2':
 if n=='3':
 	pag1 = activos(data, month)
 	pag2 = activos(data1, month)
-	grapho = creargrapho(pag1, p1, pag2, p2, 3)
+grapho = creargrapho(pag1, p1, pag2, p2, 3)
