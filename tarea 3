@@ -99,6 +99,20 @@ def creargrapho(u1, name1, u2, name2, opcion):
 	else:
 		g.save("uactivos.gml", format = "gml")
 
+def posts(data, month):
+	posts=0
+
+	for i in data:
+		for x,y in i.items():
+			if x=="created_time":
+				anio, mes, dia = y.strip().split('-')
+				if anio == '2016' and int(mes) == int(month):
+					posts += 1
+	return posts
+
+
+
+
 print "Seleccione dos paginas"
 print "........................"
 print "1.- UTFSM"
@@ -161,3 +175,6 @@ if n=='3':
 	pag1 = activos(data, month)
 	pag2 = activos(data1, month)
 grapho = creargrapho(pag1, p1, pag2, p2, 3)
+
+print "posts en el ultimo mes de ", p1, " : ", posts(data,month)
+print "posts en el ultimo mes de ", p1, " : ", posts(data1,month)
